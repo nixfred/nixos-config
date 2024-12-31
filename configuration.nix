@@ -65,6 +65,11 @@
   };
 
   ############################################
+  # Systemd OOM Killer (Disabled)
+  ############################################
+  systemd.services.systemd-oomd.enable = false;
+
+  ############################################
   # Users & Passwordless Sudo
   ############################################
   security.sudo.enable = true;
@@ -101,8 +106,9 @@
     emacs
     nano
     alacritty
+    rxvt-unicode
     konsole
-    
+
     # Browsers
     firefox
     brave
