@@ -146,9 +146,10 @@
   # System State
   ############################################
   system.stateVersion = "24.11";
-}
 
-{
+  ############################################
+  # Enable Flakes
+  ############################################
   nix = {
     package = pkgs.nixFlakes;  # Use the flakes-enabled Nix package
     extraOptions = ''
@@ -156,4 +157,3 @@
     '';
   };
 }
-
