@@ -8,7 +8,7 @@
     ./hardware-configuration.nix
   ];
 
-  # Enable Flakes (optional)
+  # Enable Flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
@@ -16,41 +16,7 @@
   boot.loader.grub.device = "/dev/vda";
 
   # Networking
-  networking.hostName = "nixos-guest";
-  networking.networkmanager.enable = true;
-
-  # Timezone
-  time.timeZone = "America/New_York";
-
-  # Locales
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  ############################################
-  # Services Section
-
-[pi@nixos-flake:~]$ c
-c: command not found
-
-[pi@nixos-flake:~]$ sudo more /etc/nixos/configuration.nix 
-{ config, pkgs, ... }:
-
-{
-  ############################################
-  # Imports & Basic System Configuration
-  ############################################
-  imports = [
-    ./hardware-configuration.nix
-  ];
-
-  # Enable Flakes (optional)
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Bootloader
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
-
-  # Networking
-  networking.hostName = "nixos-guest";
+  networking.hostName = "nixosvm";  # Set hostname to "nixosvm"
   networking.networkmanager.enable = true;
 
   # Timezone
@@ -109,10 +75,12 @@ c: command not found
     cmake
 
     # Utilities
-    mc
     vlc
     neofetch
     spice-vdagent     # SPICE agent for clipboard sharing
+    #qemu-guest-agent  # Guest agent for host-guest communication
+    #virtio-drivers    # VirtIO drivers for networking and storage
+    mc                # Midnight Commander (added)
   ];
 
   ############################################
@@ -138,4 +106,3 @@ c: command not found
   ############################################
   system.stateVersion = "24.11";  # Adjust based on your NixOS channel
 }
-
