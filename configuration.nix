@@ -15,6 +15,24 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/vda";
 
+# Alias
+environment.shellAliases = {
+  c = "clear";
+  ll = "ls -la";
+  gs = "git status";
+  aa = "sudo nixos-rebuild switch --flake /etc/nixos";
+  "ping1" = "ping 1.1.1.1";  # Numeric keys like '1' are invalid; renamed to 'ping1'
+  ".." = "cd ..";  # Quotes for special characters
+  eip = "curl ifconfig.me";
+  lin = "ssh -L 5901:127.0.0.1:5901 pi@lin";
+  du = "du -h";
+  ne = "cmatrix";
+  e = "exit";
+  htop = "sudo htop";
+  df = "df -h";
+  live = "vnstat --live";
+};
+
   # Networking
   networking.hostName = "nixosvm";  # Set hostname to "nixosvm"
   networking.networkmanager.enable = true;
@@ -61,6 +79,8 @@
     bash
     coreutils
     neovim
+    neofetch
+    cmatrix
     tmux
     alacritty
     rxvt-unicode
@@ -106,3 +126,4 @@
   ############################################
   system.stateVersion = "24.11";  # Adjust based on your NixOS channel
 }
+
