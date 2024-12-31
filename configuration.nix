@@ -20,7 +20,7 @@ environment.shellAliases = {
   c = "clear";
   ll = "ls -la";
   gs = "git status";
-  aa = "sudo nixos-rebuild switch --flake /etc/nixos";
+  aa = "sudo nixos-rebuild switch --flake /etc/nixos#nixosvm";
   "ping1" = "ping 1.1.1.1";  # Numeric keys like '1' are invalid; renamed to 'ping1'
   ".." = "cd ..";  # Quotes for special characters
   eip = "curl ifconfig.me";
@@ -126,4 +126,5 @@ environment.shellAliases = {
   ############################################
   system.stateVersion = "24.11";  # Adjust based on your NixOS channel
 }
+
 
