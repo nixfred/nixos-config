@@ -6,7 +6,7 @@
 
   # Outputs
   outputs = { self, nixpkgs }: {
-    nixosConfigurations.nixos-guest = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixosvm = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
