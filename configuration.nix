@@ -101,7 +101,6 @@ c: command not found
     konsole
 
     # Browsers
-    firefox
     brave
 
     # Development tools
@@ -110,6 +109,7 @@ c: command not found
     cmake
 
     # Utilities
+    mc
     vlc
     neofetch
     spice-vdagent     # SPICE agent for clipboard sharing
