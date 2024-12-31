@@ -9,6 +9,12 @@ This repository contains the configuration files for a NixOS system using Flakes
 - **Essential Tools**: Includes utilities, browsers, and development tools.
 - **VM Integration**: Clipboard sharing via `spice-vdagent`.
 
+## Note
+# sudo nano /etc/nixos/configuration.nix
+# services.openssh.enable = true;
+# sudo nixos-rebuild switch   
+# must be done locally bc of sshd disconnect! ^^^
+
 ## Files
 
 ### 1. `flake.nix`
