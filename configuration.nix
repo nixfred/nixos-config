@@ -17,6 +17,7 @@
 
 # Alias
 environment.shellAliases = {
+  au = "nix flake update /etc/nixos";
   c = "clear";
   ll = "ls -la";
   gs = "git status";
@@ -76,10 +77,10 @@ environment.shellAliases = {
     curl
     wget
     htop
+    terminator
     bash
     coreutils
     neovim
-    terminator
     neofetch
     cmatrix
     tmux
@@ -127,5 +128,4 @@ environment.shellAliases = {
   ############################################
   system.stateVersion = "24.11";  # Adjust based on your NixOS channel
 }
-
 
