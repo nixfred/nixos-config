@@ -79,6 +79,7 @@ environment.shellAliases = {
     bash
     coreutils
     neovim
+    terminator
     neofetch
     cmatrix
     tmux
