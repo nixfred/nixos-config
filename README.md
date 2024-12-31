@@ -12,7 +12,7 @@ This repository contains the configuration files for a NixOS system using Flakes
 ## Note
  - sudo nano /etc/nixos/configuration.nix
  - services.openssh.enable = true;
- - sudo nixos-rebuild switch must be done locally bc of sshd disconnect.
+ - sudo nixos-rebuild switch --flake /etc/nixos # must be done locally bc of sshd disconnect.
 
 ## Files
 
