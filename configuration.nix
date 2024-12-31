@@ -40,10 +40,8 @@
   # Display Server (X11), Display Manager, DE
   ############################################
   services.xserver.enable = true;
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
+  services.xserver.layout = "us";  # Corrected Keyboard Layout
+  services.xserver.xkbOptions = "";  # Optional XKB options
 
   # LightDM Display Manager (no auto-login)
   services.xserver.displayManager.lightdm.enable = true;
