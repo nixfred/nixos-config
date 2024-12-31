@@ -148,4 +148,12 @@
   system.stateVersion = "24.11";
 }
 
+{
+  nix = {
+    package = pkgs.nixFlakes;  # Use the flakes-enabled Nix package
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
+}
 
