@@ -1,6 +1,3 @@
-
-###############################
-
 { config, pkgs, ... }:
 
 {
@@ -11,7 +8,7 @@
     ./hardware-configuration.nix
   ];
 
-  # Enable Flakes
+  # Enable Flakes (optional)
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
@@ -19,7 +16,7 @@
   boot.loader.grub.device = "/dev/vda";
 
   # Networking
-  networking.hostName = "nixos-flake";
+  networking.hostName = "nixos-guest";
   networking.networkmanager.enable = true;
 
   # Timezone
@@ -29,48 +26,66 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   ############################################
-  # Display Server (X11), Display Manager, DE
+  # Services Section
+
+[pi@nixos-flake:~]$ c
+c: command not found
+
+[pi@nixos-flake:~]$ sudo more /etc/nixos/configuration.nix 
+{ config, pkgs, ... }:
+
+{
+  ############################################
+  # Imports & Basic System Configuration
+  ############################################
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  # Enable Flakes (optional)
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Bootloader
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/vda";
+
+  # Networking
+  networking.hostName = "nixos-guest";
+  networking.networkmanager.enable = true;
+
+  # Timezone
+  time.timeZone = "America/New_York";
+
+  # Locales
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  ############################################
+  # Services Section
+  ############################################
+  services = {
+    # Enable QEMU Guest Agent
+    #qemuGuest.enable = true;
+
+    # Enable SPICE Agent for clipboard sharing and display resizing
+    spice-vdagentd.enable = true;
+
+    # Enable SSH
+    openssh.enable = true;
+
+    # Printing support
+    printing.enable = true;
+  };
+
+  ############################################
+  # Desktop Environment
   ############################################
   services.xserver.enable = true;
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
   ############################################
-  # SSH, Printing, PipeWire
+  # System Packages
   ############################################
-  services.openssh.enable = true;
-  services.printing.enable = true;
-
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  ############################################
-  # Users & Passwordless Sudo
-  ############################################
-  security.sudo.enable = true;
-  security.sudo.wheelNeedsPassword = false;
-
-  users.users.pi = {
-    isNormalUser = true;
-    description = "pi";
-    extraGroups = [ "networkmanager" "wheel" ];
-  };
-
-  ############################################
-  # Unfree Packages & System Packages
-  ############################################
-  nixpkgs.config.allowUnfree = true;
-
   environment.systemPackages = with pkgs; [
     # Basic tools
     git
@@ -97,8 +112,20 @@
     # Utilities
     vlc
     neofetch
-    spice-vdagent  # Clipboard sharing for VMs
+    spice-vdagent     # SPICE agent for clipboard sharing
   ];
+
+  ############################################
+  # Users & Passwordless Sudo
+  ############################################
+  security.sudo.enable = true;
+  security.sudo.wheelNeedsPassword = false;
+
+  users.users.pi = {
+    isNormalUser = true;
+    description = "pi";
+    extraGroups = [ "networkmanager" "wheel" ];
+  };
 
   ############################################
   # Firewall
@@ -109,5 +136,6 @@
   ############################################
   # System State
   ############################################
-  system.stateVersion = "24.11";
+  system.stateVersion = "24.11";  # Adjust based on your NixOS channel
 }
+
