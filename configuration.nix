@@ -17,7 +17,7 @@
 
 # Alias
 environment.shellAliases = {
-  au = "nix flake update /etc/nixos";
+  au = "sudo nix flake update /etc/nixos";
   c = "clear";
   ll = "ls -la";
   gs = "git status";
