@@ -1,5 +1,5 @@
 {
-  description = "NixOS Configuration for nixos with Flakes and Home Manager";
+  description = "NixOS Configuration for nixosvm with Flakes";
 
   # Inputs
   inputs.nixpkgs.url = "github:NixOS/nixpkgs";
@@ -7,7 +7,7 @@
 
   # Outputs
   outputs = { self, nixpkgs, home-manager }: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixosvm = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
@@ -16,3 +16,4 @@
     };
   };
 }
+
