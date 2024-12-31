@@ -10,10 +10,9 @@ This repository contains the configuration files for a NixOS system using Flakes
 - **VM Integration**: Clipboard sharing via `spice-vdagent`.
 
 ## Note
-# sudo nano /etc/nixos/configuration.nix
-# services.openssh.enable = true;
-# sudo nixos-rebuild switch   
-# must be done locally bc of sshd disconnect! ^^^
+ - sudo nano /etc/nixos/configuration.nix
+ - services.openssh.enable = true;
+ - sudo nixos-rebuild switch must be done locally bc of sshd disconnect.
 
 ## Files
 
