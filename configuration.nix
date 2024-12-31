@@ -1,5 +1,3 @@
-### Nix Nixos v1 ###
-
 { config, pkgs, ... }:
 
 {
@@ -10,13 +8,12 @@
     ./hardware-configuration.nix
   ];
 
-  # Bootloader (assumes /dev/vda as root)
+  # Bootloader Configuration
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.device = "/dev/vda";  # Adjust this based on your setup
 
   # Networking
-  networking.hostName = "nixos-guest";
+  networking.hostName = "nixos-guest";  # Change hostname if needed
   networking.networkmanager.enable = true;
 
   # Timezone
@@ -24,50 +21,20 @@
 
   # Locales
   i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "en_US.UTF-8";
-    LC_IDENTIFICATION = "en_US.UTF-8";
-    LC_MEASUREMENT = "en_US.UTF-8";
-    LC_MONETARY = "en_US.UTF-8";
-    LC_NAME = "en_US.UTF-8";
-    LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
 
   ############################################
-  # Display Server (X11), Display Manager, DE
+  # Graphical Environment
   ############################################
   services.xserver.enable = true;
-  services.xserver.layout = "us";  # Corrected Keyboard Layout
+  services.xserver.layout = "us";  # Keyboard layout
   services.xserver.xkbOptions = "";  # Optional XKB options
-
-  # LightDM Display Manager (no auto-login)
-  services.xserver.displayManager.lightdm.enable = true;
-
-  # Cinnamon Desktop (older-style option)
-  services.xserver.desktopManager.cinnamon.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;  # LightDM display manager
+  services.xserver.desktopManager.cinnamon.enable = true;  # Cinnamon desktop environment
 
   ############################################
-  # SSH, Printing, PipeWire
+  # Clipboard Sharing for VMs (spice-vdagent)
   ############################################
-  services.openssh.enable = true;
-  services.printing.enable = true;
-
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  ############################################
-  # Systemd OOM Killer (Disabled)
-  ############################################
-  systemd.services.systemd-oomd.enable = false;
+  services.spice-vdagentd.enable = true;
 
   ############################################
   # Users & Passwordless Sudo
@@ -79,7 +46,6 @@
     isNormalUser = true;
     description = "pi";
     extraGroups = [ "networkmanager" "wheel" ];
-    # If you didn't define a password here, use `passwd pi`.
   };
 
   ############################################
@@ -88,23 +54,15 @@
   nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = with pkgs; [
-    # Basic CLI tools
+    # Basic tools
     git
     curl
     wget
     htop
     bash
     coreutils
-    tmux
     neovim
-    python3
-    nodejs
-    openssh
-    gdb
-    openssl
-    sqlite
-    emacs
-    nano
+    tmux
     alacritty
     rxvt-unicode
     konsole
@@ -112,50 +70,26 @@
     # Browsers
     firefox
     brave
-    chromium
 
-    # Build Tools
+    # Development tools
+    python3
     gcc
-    gnumake
     cmake
 
     # Utilities
     vlc
-    mpv
-    spice-vdagent
-    ffmpeg
-    sshfs
-    figlet
-    nmap
-    vnstat
     neofetch
-    mc
-    autossh
-    proxychains
-    rclone
-    unzip
-    traceroute
-    cmatrix
+    spice-vdagent  # Clipboard sharing for VMs
   ];
 
   ############################################
   # Firewall
   ############################################
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedTCPPorts = [ 22 ];  # Allow SSH
 
   ############################################
   # System State
   ############################################
   system.stateVersion = "24.11";
-
-  ############################################
-  # Enable Flakes
-  ############################################
-  nix = {
-    package = pkgs.nixFlakes;  # Use the flakes-enabled Nix package
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
 }
