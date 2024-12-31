@@ -101,11 +101,8 @@
     emacs
     nano
     alacritty
-    rxvt-unicode
-    gnome-terminal
     konsole
-    terminator
-
+    
     # Browsers
     firefox
     brave
