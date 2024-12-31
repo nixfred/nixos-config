@@ -122,6 +122,7 @@
     # Utilities
     vlc
     mpv
+    spice-vdagent
     ffmpeg
     sshfs
     figlet
