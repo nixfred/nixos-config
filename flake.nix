@@ -7,7 +7,7 @@
 
   outputs = { self, nixpkgs }: {
     nixosConfigurations = {
-      nixfred = nixpkgs.lib.nixosSystem {
+      nixos-guest = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";  # Adjust for your architecture
         modules = [ ./configuration.nix ];
       };
