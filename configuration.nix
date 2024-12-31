@@ -1,3 +1,5 @@
+### Nix Nixos v1 ###
+
 { config, pkgs, ... }:
 
 {
