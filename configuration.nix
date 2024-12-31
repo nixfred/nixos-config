@@ -8,12 +8,15 @@
     ./hardware-configuration.nix
   ];
 
-  # Bootloader Configuration
+  # Enable Flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Bootloader
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";  # Adjust this based on your setup
+  boot.loader.grub.device = "/dev/vda";
 
   # Networking
-  networking.hostName = "nixos-guest";  # Change hostname if needed
+  networking.hostName = "nixos-flake";
   networking.networkmanager.enable = true;
 
   # Timezone
@@ -23,18 +26,30 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   ############################################
-  # Graphical Environment
+  # Display Server (X11), Display Manager, DE
   ############################################
   services.xserver.enable = true;
-  services.xserver.layout = "us";  # Keyboard layout
-  services.xserver.xkbOptions = "";  # Optional XKB options
-  services.xserver.displayManager.lightdm.enable = true;  # LightDM display manager
-  services.xserver.desktopManager.cinnamon.enable = true;  # Cinnamon desktop environment
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.desktopManager.cinnamon.enable = true;
 
   ############################################
-  # Clipboard Sharing for VMs (spice-vdagent)
+  # SSH, Printing, PipeWire
   ############################################
-  services.spice-vdagentd.enable = true;
+  services.openssh.enable = true;
+  services.printing.enable = true;
+
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
 
   ############################################
   # Users & Passwordless Sudo
@@ -86,14 +101,10 @@
   # Firewall
   ############################################
   networking.firewall.enable = true;
-  networking.firewall.allowedTCPPorts = [ 22 ];  # Allow SSH
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
   ############################################
   # System State
   ############################################
   system.stateVersion = "24.11";
 }
-
-nix = {
-  settings.experimental-features = [ "nix-command" "flakes" ];
-};
