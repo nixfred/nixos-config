@@ -1,8 +1,3 @@
-Here’s a **README.md** documenting the process as a how-to guide:
-
----
-
-```markdown
 # How to Set Up Git with SSH and Clone a Repository
 
 This guide explains how to set up SSH authentication for GitHub and clone a repository without needing to sign in interactively.
